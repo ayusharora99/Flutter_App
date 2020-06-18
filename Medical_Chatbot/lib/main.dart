@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new TextField(
+                textAlign: TextAlign.center,
                 decoration: new InputDecoration(
                   hintText: "Hi there! What are your symptoms?"
                 ),
@@ -82,7 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 controller: controller
               ),
-              new Text(symptoms)
+              new Text(symptoms),
+              RaisedButton(
+                onPressed: (){},
+                child: Text("Find Doctors"),
+                color: Colors.lightBlue
+                )
             ],
           )
         )
