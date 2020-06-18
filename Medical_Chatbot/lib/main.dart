@@ -56,6 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final TextEditingController controller = new TextEditingController();
 
+    void _sendDataToSecondScreen(BuildContext context) {
+    String textToSend = controller.text;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SecondScreen(text: textToSend,),
+        ));
+  }
+
+
     String symptoms = '';
     
     // This method is rerun every time setState is called, for instance as done
@@ -86,11 +96,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               new Text(symptoms),
               RaisedButton(
-                onPressed: () {
-                  symptoms = controller.text;
-                  print(symptoms);
-                  controller.text = '';
+                onPressed: (){
+                  _sendDataToSecondScreen(context);
                 },
+                // onPressed: () {
+                //   symptoms = controller.text;
+                //   print(symptoms);
+                //   controller.text = '';
+                // },
                 child: Text("Find Doctors"),
                 color: Colors.lightBlue
                 )
@@ -103,3 +116,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   
 }
+
+
+
+class SecondScreen extends StatelessWidget {
+  final String text;
+
+  // receive data from the FirstScreen as a parameter
+  SecondScreen({Key key, @required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('List of Doctors')),
+      body: Center(
+        child: Text(
+          "Symptoms: " + text,
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
+
