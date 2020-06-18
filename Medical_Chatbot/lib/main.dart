@@ -57,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final TextEditingController controller = new TextEditingController();
 
     String symptoms = '';
+    
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -75,17 +76,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: new InputDecoration(
                   hintText: "Hi there! What are your symptoms?"
                 ),
-                onSubmitted: (String str){ // str will be fed to Alan 
-                  setState((){
-                    symptoms = "Symptoms: " + str;
-                    controller.text = '';
-                  });
-                },
+                // onSubmitted: (String str){ // str will be fed to Alan 
+                //   setState((){
+                //     symptoms = "Symptoms: " + str;
+                //     controller.text = '';
+                //   });
+                // },
                 controller: controller
               ),
               new Text(symptoms),
               RaisedButton(
-                onPressed: (){},
+                onPressed: () {
+                  symptoms = controller.text;
+                  print(symptoms);
+                  controller.text = '';
+                },
                 child: Text("Find Doctors"),
                 color: Colors.lightBlue
                 )
