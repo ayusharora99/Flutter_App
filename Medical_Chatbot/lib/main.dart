@@ -1,3 +1,5 @@
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:alan_voice/alan_voice.dart';
 
@@ -35,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     void _sendDataToSecondScreen(BuildContext context) {
     String textToSend = controller.text;
+    print("initial text is " + textToSend);
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -76,103 +79,63 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class SecondScreen extends StatelessWidget {
   final String text;
-
-  // receive data from the FirstScreen as a parameter
+  List <String> doctorNames = ["Dr. Turing","Dr. Andy", "Dr. Bob", "Dr. Chuck", "Dr. Danny", "Dr. Ethan", "Dr. Frank", "Dr. George", "Dr. Harry", "Dr. Ian", "Dr. John", "Dr. Karl", "Dr. Leo", "Dr. Marty", "Dr. Nicole", "Dr. Oscar", "Dr. Patrick", "Dr. Quinn", "Dr. Rick", "Dr. Steven", "Dr. Todd", "Dr. Uriel", "Dr. Vanessa", "Dr. William", "Dr. Xavier", "Dr. Yasmine", "Dr. Zeus"];
   SecondScreen({Key key, @required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('List of Doctors')),
-      body: getListView(text)
+      body: getListView(text, context, doctorNames)
     );
   }
 
-  Widget getListView(String text){
-    var listView = ListView(
-      children: <Widget>[
-        ListTile(
+  Widget getListView(String text, BuildContext context, List doctorNames){
+    var listView = ListView.builder(
+      itemCount: doctorNames.length,
+      itemBuilder: (context,index){
+        return ListTile(
           leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-          // onTap: 
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-        ListTile(
-          leading: Icon(Icons.local_hospital),
-          title: Text("Dr. Turing ") ,
-          subtitle: Text("For these symptoms: " + text),
-          selected: true
-        ),
-      
-      ],
+            trailing: Icon(Icons.arrow_forward_ios),
+            title: Text(doctorNames[index]) ,
+            subtitle: Text("For these symptoms: " + text),
+            selected: true,
+            onTap: () {
+              print(doctorNames[index]);
+              goToDoctorScreen(context,doctorNames[index],text);
+            }
+          );
+      },
     );
+    
     return listView;
   }
+
+   void goToDoctorScreen(BuildContext context, String docName, String symptoms) {
+    String textToSend = symptoms;
+    String docToSend = docName;
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DoctorScreen(text: textToSend, docName: docToSend ),
+        ));
+  }
+}
+
+
+
+
+class DoctorScreen extends StatelessWidget{
+  final String text;
+  final String docName;
+  DoctorScreen({Key key, @required this.text, @required this.docName}) : super(key: key);
+  
+  Widget build(BuildContext context) {
+    print("Doctor Screen: " + text);
+    return Scaffold(
+      appBar: AppBar(title: Text(docName))
+    );
+  }
+
 }
